@@ -49,16 +49,6 @@ function showPasswordRequirements() {
   }, 3000);
 }
 
-/**
- * Loads users from the server.
- * @returns {void}
- */
-async function loadUsers() {
-  let storedUsers = await getItem("users");
-  if (storedUsers) {
-    users = JSON.parse(storedUsers);
-  }
-}
 
 /**
  * Saves login details if the checkbox is activated.
@@ -92,16 +82,16 @@ async function login() {
     return;
   }
 
-  const users = await loadUsersData();
-
-  if (!users) {
-    handleLoginError();
-    return;
+  body = {
+    email: emailField.value,
+    password: passwordField.value
   }
-
-  const user = authenticateUser(users, emailField.value, passwordField.value);
-
-  if (user) {
+  
+  const response = await post('login',JSON.stringify(body))
+  console.log(response)
+  if (response.email && response.email == emailField.value && response.token) {
+    user = response;
+    user.password = body.password;
     handleSuccessfulLogin(rememberMeCheckbox, user);
   } else {
     displayLoginError();
@@ -122,6 +112,7 @@ function handleLoginError() {
  * @param {string} user.email 
  */
 function handleSuccessfulLogin(rememberMeCheckbox, user) {
+  localStorage.setItem('token', user.token);
   handleRememberMe(rememberMeCheckbox, user.email, user.password);
   setLoggedInUser(user);
   navigateToSummary();
@@ -184,17 +175,6 @@ async function loadUsersData() {
   return users;
 }
 
-/**
- * Authenticates a user based on email and password.
- * @param {Array} users
- * @param {string} email
- * * @param {string} password
- */
-function authenticateUser(users, email, password) {
-  return users.find(
-    (user) => user.email === email && user.password === password
-  );
-}
 
 /**
  * Handles the remember me functionality based on the state of a checkbox.
@@ -216,7 +196,7 @@ function handleRememberMe(checkbox, email, password) {
  * @param {Object} user
  */
 function setLoggedInUser(user) {
-  localStorage.setItem("loggedInUser", user.name);
+  // localStorage.setItem("loggedInUser", user.name);
   localStorage.setItem("loggedInUserID", user.id);
 }
 
@@ -315,17 +295,4 @@ function guestLogout() {
   userLogout();
 }
 
-/**!!!HILFSFUNKTION UM SCHON REGISTRIERTE USER ANZUZEIGEN!!!*/
-/**
- * Displays registered users in the console.
- * @returns {void}
- */
-async function logRegisteredUsers() {
-  const users = JSON.parse(await getItem("users"));
 
-  if (users) {
-    console.log("Registrierte Benutzer:", users);
-  } else {
-    console.log("Keine Benutzer gefunden.");
-  }
-}

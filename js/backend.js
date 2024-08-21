@@ -1,31 +1,48 @@
+const URL = "http://127.0.0.1:8000";
 
-const URL = 'http://127.0.0.1:8000'
-
-let headers = {
-    'Content-Type': 'application/json',
-    // 'Authorization' : 'Token c5ad500616bc2c992d2c9de60a9446e3249a6ad4'
+function setHeaders() {
+  const token = localStorage.getItem("token");
+  return {
+    "Content-Type": "application/json",
+    Authorization: `Token ${token}`,
+  };
 }
 
 async function get(key) {
-    const url = `${URL}/api/${key}/`
-    return fetch(url, { headers: headers , method:'GET'})
-        .then(res => res.json())
+  const headers = setHeaders();
+  const url = `${URL}/api/${key}/`;
+  return fetch(url, { headers: headers, method: "GET" }).then((res) =>
+    res.json()
+  );
 }
 
 async function post(key, body) {
-    const url = `${URL}/api/${key}/`;
-    return fetch(url, { headers: headers, method: 'POST', body: body })
-        .then(res => res.json())
-        .catch(error => console.log(error))
+  const headers = setHeaders();
+  const url = `${URL}/api/${key}/`;
+  return fetch(url, { headers: headers, method: "POST", body: body })
+    .then((res) => res.json())
+    .catch((error) => console.log(error));
 }
 
 async function update(key, body) {
-    const url = `${URL}/api/${key}/`
-    return fetch(url, {headers:headers, method: 'PUT', body: body})
-        .then(res => res.json())
-        .catch(error => console.log(error))
+  const headers = setHeaders();
+  const url = `${URL}/api/${key}/`;
+  return fetch(url, { headers: headers, method: "PUT", body: body })
+    .then((res) => res.json())
+    .catch((error) => console.log(error));
 }
 
+async function getCurrentUser() {
+  const loggedInUserID = localStorage.getItem('loggedInUserID')
+  if (loggedInUserID) currentUser = await get(`users/${loggedInUserID}`);
+}
+
+// async function getUserInfo() {
+//     response = await get('users/1')
+//     console.log(response)
+// }
+
+// getUserInfo()
 
 // register
 // login

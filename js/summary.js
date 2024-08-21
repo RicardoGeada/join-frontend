@@ -1,9 +1,10 @@
 /**
  * Event listener
  */
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", async function () {
   loadTasksFromRemoteStorage();
   updateDisplay();
+  await getCurrentUser();
   displayTimeGreetingAndUser();
   addImageHoverEffects();
 });
@@ -65,11 +66,11 @@ function displayTimeGreetingAndUser() {
   let greeting = getGreetingByHour(currentTime.getHours());
 
   const loggedInUser = localStorage.getItem("loggedInUser");
-  if (loggedInUser) {
+  if (true) {
     document.querySelector(".right-container p:nth-child(1)").textContent =
       greeting + ",";
     document.querySelector(".right-container p:nth-child(2)").textContent =
-      loggedInUser;
+      currentUser.username;
   }
 }
 
@@ -78,7 +79,9 @@ function displayTimeGreetingAndUser() {
  * @async
  */
 async function loadTasksFromRemoteStorage() {
-  tasks = JSON.parse(await getItem("tasks"));
+  tasks = await get('tasks');
+  console.log(tasks)
+  // tasks = JSON.parse(await getItem("tasks"));
   updateTaskFromServer();
   nextDeadline();
 }
