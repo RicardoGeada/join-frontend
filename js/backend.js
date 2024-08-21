@@ -32,6 +32,15 @@ async function update(key, body) {
     .catch((error) => console.log(error));
 }
 
+
+async function deleteAPI(key) {
+  const headers = setHeaders();
+  const url = `${URL}/api/${key}/`;
+  return fetch(url, { headers: headers, method: "DELETE"})
+    .then((res) => res)
+    .catch((error) => console.log(error));
+}
+
 async function getCurrentUser() {
   const loggedInUserID = localStorage.getItem('loggedInUserID')
   if (loggedInUserID) currentUser = await get(`users/${loggedInUserID}`);

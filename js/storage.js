@@ -116,10 +116,9 @@ async function getItem(key) {
  * @returns {void}
  */
 async function userAndContacts() {
-  loadContactsFromStorage();
-  loadUsersFromStorage();
-  loadCurrentUserFromStorage();
-  loadLastContactId();
+  await loadContactsFromStorage();
+  await loadUsersFromStorage();
+  await loadCurrentUserFromStorage();
   isLoaded = true;
 }
 
@@ -141,7 +140,7 @@ async function loadCurrentUserFromStorage() {
  * Loads user data from storage.
  */
 async function loadUsersFromStorage() {
-  users = await loadFromStorage('users', users);
+  users = await get('users');
 }
 
 
@@ -149,7 +148,8 @@ async function loadUsersFromStorage() {
  * Loads contact data from storage.
  */
 async function loadContactsFromStorage() {
-  contacts = await loadFromStorage('contacts', contacts);
+  contacts = await get('contacts');
+  console.log('Contacts' , contacts)
 }
 
 
@@ -157,7 +157,7 @@ async function loadContactsFromStorage() {
  * Loads task data from storage.
  */
 async function loadTasksFromStorage() {
-  tasks = await loadFromStorage('tasks', tasks);
+  tasks = await get('tasks');
 }
 
 
@@ -204,16 +204,6 @@ function sortContactsUserFirst(arr) {
   }
 }
 
-
-/**
- * Loads the ID of the last contact from storage.
- * @returns {void}
- */
-async function loadLastContactId() {
-  let tempData;
-  tempData = await loadData("lastContactId", 0);
-  lastContactId = +JSON.parse(tempData);
-}
 
 
 /**

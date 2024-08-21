@@ -7,7 +7,7 @@
 function renderContacts() {
     let newContent = "", firstLetter = "";
     for (let i = 0; i < sortedContacts.length; i++) {
-        let isUser = isCurrentUserInfo(sortedContacts[i].userid);
+        let isUser = isCurrentUserInfo(sortedContacts[i].active_user);
         let answer = nextLetter(sortedContacts[i].initials[0], firstLetter);
         firstLetter = answer[1];
         newContent += answer[0];
@@ -29,7 +29,7 @@ function renderContacts() {
 function isCurrentUserInfo(userId) {
     if (userId === loggedInUserID) {
         return " (You)";
-    } else if (userId > -1) {
+    } else if (userId) {
         return " (User)";
     } else {
         return "";
@@ -73,7 +73,7 @@ function nextLetter(currentLetter, firstLetter) {
  */
 function renderSingleView(id) {
     let index = idToIndex(id, sortedContacts);
-    let isUser = isCurrentUserInfo(sortedContacts[index].userid);
+    let isUser = isCurrentUserInfo(sortedContacts[index].active_user);
     document.getElementById("contact-single-info-badge-text").innerHTML = sortedContacts[index].initials;
     document.getElementById("contact-single-info-name-text").innerHTML = sortedContacts[index].name + isUser;
     document.getElementById("contact-single-info-email-text").innerHTML = sortedContacts[index].email;
@@ -93,7 +93,7 @@ function renderSingleView(id) {
  * @param {number} index - Index of the current contact in the sorted contact list.
  */
 function isOptionsView(id, index) {
-    if(isCurrentUserInfo(sortedContacts[index].userid) != " (User)") {
+    if(isCurrentUserInfo(sortedContacts[index].active_user) != " (User)") {
         document.getElementById('contact-btn-option-box').classList.remove('d-none');
         renderPopupEdit(id);
     } else {
@@ -110,7 +110,7 @@ function isOptionsView(id, index) {
  */
 function renderOptions(id) {
     let content = "";
-    if(isCurrentUserInfo(sortedContacts[idToIndex(id, sortedContacts)].userid) != " (User)") {
+    if(isCurrentUserInfo(sortedContacts[idToIndex(id, sortedContacts)].active_user) != " (User)") {
         content += renderOptionEdit(id);
         content += renderOptionDelete(id);
     }

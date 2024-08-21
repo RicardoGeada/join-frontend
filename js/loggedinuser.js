@@ -86,7 +86,7 @@ function useridToIndex(id, arr = users) {
 async function renderHeaderUserName() {
     let obj = document.getElementById('user-name');
     if(obj === null) {
-        window.location.reload();
+        // window.location.reload();
     } else {
         loggedInUserID == -2 ? obj.innerHTML = 'G' : obj.innerHTML = currentUser.initials;
     }

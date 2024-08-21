@@ -80,8 +80,6 @@ function displayTimeGreetingAndUser() {
  */
 async function loadTasksFromRemoteStorage() {
   tasks = await get('tasks');
-  console.log(tasks)
-  // tasks = JSON.parse(await getItem("tasks"));
   updateTaskFromServer();
   nextDeadline();
 }
