@@ -78,7 +78,7 @@ function renderSingleView(id) {
     document.getElementById("contact-single-info-name-text").innerHTML = sortedContacts[index].name + isUser;
     document.getElementById("contact-single-info-email-text").innerHTML = sortedContacts[index].email;
     document.getElementById("contact-single-info-phone-text").innerHTML = sortedContacts[index].phone;
-    document.getElementById("contact-single-info-badge-circle").className = `contact-single-info-badge-circle bg-contact-${sortedContacts[index]["badge-color"]}`;
+    document.getElementById("contact-single-info-badge-circle").className = `contact-single-info-badge-circle bg-contact-${sortedContacts[index]["badge_color"]}`;
     document.getElementById("options").innerHTML = renderOptions(id);
     document.getElementById("contact-single-info-options").innerHTML = renderOptions(id);
     isOptionsView(id, index);
@@ -126,7 +126,7 @@ function renderOptions(id) {
  */
 function renderPopupEdit(id) {
     let index = idToIndex(id, sortedContacts);
-    document.getElementById("popup-person-imgbox").className = `popup-person-imgbox bg-contact-${sortedContacts[index]["badge-color"]}`;
+    document.getElementById("popup-person-imgbox").className = `popup-person-imgbox bg-contact-${sortedContacts[index]["badge_color"]}`;
     document.getElementById("popup-person-imgbox-text").innerHTML = sortedContacts[index].initials;
     document.getElementById("editconid").value = sortedContacts[index].id;
     document.getElementById("editconname").value = sortedContacts[index].name;

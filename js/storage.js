@@ -141,6 +141,7 @@ async function loadCurrentUserFromStorage() {
  */
 async function loadUsersFromStorage() {
   users = await get('users');
+  console.log('Users' , users)
 }
 
 
@@ -158,6 +159,7 @@ async function loadContactsFromStorage() {
  */
 async function loadTasksFromStorage() {
   tasks = await get('tasks');
+  console.log('Tasks' , tasks)
 }
 
 
@@ -240,4 +242,4 @@ async function saveData(key, value) {
 
 
 // Initialize user and contact
-userAndContacts();
+// userAndContacts();

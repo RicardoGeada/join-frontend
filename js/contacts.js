@@ -220,7 +220,7 @@ async function deleteContact(id) {
     document.getElementById("popup-editcon").classList.remove("inview");
   } else if (isCurrentUser(userId)) {
     msgBox("Your account will be deleted.");
-    setTimeout(() => deleteNow(id, index, userId), 1000);
+    setTimeout(() => deleteNow(id), 1000);
     localStorage.removeItem("rememberPassword");
     localStorage.removeItem("rememberEmail");
     userLogout();
