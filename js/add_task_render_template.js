@@ -10,7 +10,7 @@
  * @returns {string} The HTML markup for the contact's initials badge.
  */
 function contactInitialsHTML(index) {
-    return `<div class="profile-badge bc-${sortedContacts[index]['badge-color']} brd-white">${sortedContacts[index]['initials']}</div>`;
+    return `<div class="profile-badge bc-${sortedContacts[index]['badge_color']} brd-white">${sortedContacts[index]['initials']}</div>`;
 }
 
 
@@ -27,10 +27,10 @@ function renderContactHTML(index, contact) {
     return `
       <button type="button" id="contact${index}" class="singleContact option item brd-r10 ${contactClass}" onclick="addedContact(${index})">
         <div class="singleContactInitialName">
-          <div class="font-white profile-badge bc-${contact['badge-color']} brd-white">${contact['initials']}</div>
+          <div class="font-white profile-badge bc-${contact['badge_color']} brd-white">${contact['initials']}</div>
           <div class="contact-text">
             <p class="contact-name" >${contact['name']}</p>
-            <div class="contact-user-state" >${checkUserState(sortedContacts[index]['userid'])}</div>
+            <div class="contact-user-state" >${checkUserState(sortedContacts[index]['active_user'])}</div>
           </div>
         </div>
         <img id="check${index}" src="./assets/img/check_button_unchecked.svg">

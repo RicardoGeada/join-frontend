@@ -21,8 +21,10 @@ let addedSubTasks = [];
  * @returns {Promise<void>} A Promise that resolves when initialization is complete.
  */
 async function initAddTask() {
-    await loadUsersFromStorage();
-    await loadCurrentUserFromStorage();
+    // userAndContacts();
+    await loadContactsFromStorage();
+    // await loadUsersFromStorage();
+    // await loadCurrentUserFromStorage();
     await loadTasksFromStorage();
     sortContactsUserFirst(contacts);
     renderContacts();
@@ -55,7 +57,7 @@ async function renderContacts() {
 function checkUserState(userid) {
     if (userid == currentUser['id']) {
         return '(You)';
-    } else if (userid < 0) {
+    } else if (!userid) {
         return '';
     } else {
         return '(User)';

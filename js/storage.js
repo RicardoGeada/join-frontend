@@ -199,7 +199,7 @@ function sortContactsUserFirst(arr) {
   sortedContacts.sort((c1, c2) => c1.initials < c2.initials ? -1 : c1.initials > c2.initials ? 1 : 0);
   // place user at the first position
   if (currentUser['id'] >= 0) {
-    const currentUserIndex = sortedContacts.findIndex(contact => contact['userid'] == currentUser['id']);
+    const currentUserIndex = sortedContacts.findIndex(contact => contact['active_user'] == currentUser['id']);
     const currentUserContactInfo = JSON.parse(JSON.stringify(sortedContacts[currentUserIndex]));
     sortedContacts.splice(currentUserIndex,1);
     sortedContacts.unshift(currentUserContactInfo);
