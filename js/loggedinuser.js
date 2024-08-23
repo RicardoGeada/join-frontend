@@ -25,8 +25,7 @@ if(!loggedInUserID || !token) {
  * Checks for guest or logged in user. Displays the user badge or logs the user out.
  */
 async function initLoggedInUser() {
-    currentUser = await getAPI(`users/${loggedInUserID}`)
-    console.log(currentUser)
+    currentUser = await getAPI(`users/${loggedInUserID}`);
     if(!currentUser) {
         userLogout();
     } else {
@@ -84,9 +83,10 @@ function useridToIndex(id, arr = users) {
  * Renders the user's initials into the badge.
  */
 async function renderHeaderUserName() {
+    await includeHTML();
     let obj = document.getElementById('user-name');
     if(obj === null) {
-        // window.location.reload();
+        window.location.reload();
     } else {
         loggedInUserID == -2 ? obj.innerHTML = 'G' : obj.innerHTML = currentUser.initials;
     }
