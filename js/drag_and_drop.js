@@ -95,7 +95,7 @@ async function moveTo(taskStateCategory) {
   if (currentUser['id'] == -2) {
     msgBox("Your changes won't be saved.<br> Please register and log in.")
   } else {
-    await update(`tasks/${task.id}`, JSON.stringify(task))
+    await updateAPI(`tasks/${task.id}`, JSON.stringify(task))
   }
   renderAllTasks();
 }

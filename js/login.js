@@ -87,7 +87,7 @@ async function login() {
     password: passwordField.value
   }
   
-  const response = await post('login',JSON.stringify(body))
+  const response = await postAPI('login',JSON.stringify(body))
   console.log(response)
   if (response.email && response.email == emailField.value && response.token) {
     user = response;

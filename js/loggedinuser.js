@@ -25,7 +25,7 @@ if(!loggedInUserID || !token) {
  * Checks for guest or logged in user. Displays the user badge or logs the user out.
  */
 async function initLoggedInUser() {
-    currentUser = await get(`users/${loggedInUserID}`)
+    currentUser = await getAPI(`users/${loggedInUserID}`)
     console.log(currentUser)
     if(!currentUser) {
         userLogout();

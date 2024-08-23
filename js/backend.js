@@ -8,7 +8,7 @@ function setHeaders() {
   };
 }
 
-async function get(key) {
+async function getAPI(key) {
   const headers = setHeaders();
   const url = `${URL}/api/${key}/`;
   return fetch(url, { headers: headers, method: "GET" }).then((res) =>
@@ -16,7 +16,7 @@ async function get(key) {
   );
 }
 
-async function post(key, body) {
+async function postAPI(key, body) {
   const headers = setHeaders();
   const url = `${URL}/api/${key}/`;
   return fetch(url, { headers: headers, method: "POST", body: body })
@@ -24,7 +24,7 @@ async function post(key, body) {
     .catch((error) => console.log(error));
 }
 
-async function update(key, body) {
+async function updateAPI(key, body) {
   const headers = setHeaders();
   const url = `${URL}/api/${key}/`;
   return fetch(url, { headers: headers, method: "PUT", body: body })
@@ -43,6 +43,6 @@ async function deleteAPI(key) {
 
 async function getCurrentUser() {
   const loggedInUserID = localStorage.getItem('loggedInUserID')
-  if (loggedInUserID) currentUser = await get(`users/${loggedInUserID}`);
+  if (loggedInUserID) currentUser = await getAPI(`users/${loggedInUserID}`);
 }
 

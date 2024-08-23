@@ -144,7 +144,7 @@ async function register(fields) {
     email: fields.emailField.value.toLowerCase(),
     password: fields.passwordField.value,
   };
-  const response = await post('register', JSON.stringify(newUser));
+  const response = await postAPI('register', JSON.stringify(newUser));
   if (response.email && response.email.includes('custom user with this email already exists.')) {
     showEmailExistPopup();
   }

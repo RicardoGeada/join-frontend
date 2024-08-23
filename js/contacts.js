@@ -99,7 +99,7 @@ async function saveNewContact() {
   } else {
     let newDataSet = readNewInputs();
     clearAddPopup();
-    let response = await post("contacts", JSON.stringify(newDataSet));
+    let response = await postAPI("contacts", JSON.stringify(newDataSet));
     isSavedNewContact(response.email == newDataSet.email);
   }
 }
@@ -112,7 +112,7 @@ async function saveNewContact() {
  */
 async function isSavedNewContact(answer) {
   if (answer) {
-    contacts = await get('contacts');
+    contacts = await getAPI('contacts');
     sortedContacts = sortContacts(contacts);
     renderContacts();
     document.getElementById("contactsuccess").classList.add("shortpopup");
@@ -163,9 +163,9 @@ function clearAddPopup() {
 async function saveEditContact() {
   let id = +document.getElementById("editconid").value;
   let updateData =  getUpdateData();
-  let response = await update(`contacts/${id}`, JSON.stringify(updateData));
+  let response = await updateAPI(`contacts/${id}`, JSON.stringify(updateData));
 //   if (response.active_user == loggedInUserID) updateLocalStorage(response.email);
-  contacts = await get('contacts');
+  contacts = await getAPI('contacts');
   sortedContacts = sortContacts(contacts);
   renderSaveEditContact(id);
 }
@@ -239,7 +239,7 @@ async function deleteContact(id) {
  */
 async function deleteNow(id) {
   let response = await deleteAPI(`contacts/${id}`);
-  contacts = await get('contacts');
+  contacts = await getAPI('contacts');
   sortedContacts = sortContacts(contacts);
   renderContacts();
   closeContact();

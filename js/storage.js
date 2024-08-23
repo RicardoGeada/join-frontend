@@ -1,16 +1,4 @@
 /**
- * Constant storing the storage token for remote storage.
- * @type {string}
- */
-// const STORAGE_TOKEN = '6E3ZJQ08T28HLNYDZ6RRN8U79V2FL0N375M0W6KJ';
-
-/**
- * The URL for remote storage.
- * @type {string}
- */
-// const STORAGE_URL = 'https://remote-storage.developerakademie.org/item';
-
-/**
  *indicating the data has been loaded.
  * @type {boolean}
  */
@@ -140,7 +128,7 @@ async function loadCurrentUserFromStorage() {
  * Loads user data from storage.
  */
 async function loadUsersFromStorage() {
-  users = await get('users');
+  users = await getAPI('users');
   console.log('Users' , users)
 }
 
@@ -149,7 +137,7 @@ async function loadUsersFromStorage() {
  * Loads contact data from storage.
  */
 async function loadContactsFromStorage() {
-  contacts = await get('contacts');
+  contacts = await getAPI('contacts');
   console.log('Contacts' , contacts)
 }
 
@@ -158,7 +146,7 @@ async function loadContactsFromStorage() {
  * Loads task data from storage.
  */
 async function loadTasksFromStorage() {
-  tasks = await get('tasks');
+  tasks = await getAPI('tasks');
   console.log('Tasks' , tasks)
 }
 

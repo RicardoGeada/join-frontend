@@ -287,7 +287,7 @@ async function addNewTask(title, description, priority, date, category, assigned
  * @throws {Error} Throws an error if pushing the new task or storing it in storage fails.
  */
 async function pushNewTask(newTask) {
-    let response = await post('tasks', JSON.stringify(newTask));
+    let response = await postAPI('tasks', JSON.stringify(newTask));
     clearTaskInput();
     window.location.href = 'board.html';
 }

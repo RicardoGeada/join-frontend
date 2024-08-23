@@ -422,5 +422,5 @@ async function saveEditedTask(task,currentTask) {
   task['priority'] = currentTask['priority'];
   task['assigned_to'] = currentTask['assigned_to'];
   task['subtasks'] = currentTask['subtasks'];
-  await update(`tasks/${task.id}`, JSON.stringify(task));
+  await updateAPI(`tasks/${task.id}`, JSON.stringify(task));
 }

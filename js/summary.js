@@ -79,7 +79,7 @@ function displayTimeGreetingAndUser() {
  * @async
  */
 async function loadTasksFromRemoteStorage() {
-  tasks = await get('tasks');
+  tasks = await getAPI('tasks');
   updateTaskFromServer();
   nextDeadline();
 }
