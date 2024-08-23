@@ -73,13 +73,6 @@ async function setItem(key, value) {
 }
 
 
-/**
- * Save task data to storage
- */
-async function saveTasksToStorage() {
-  // await setItem('tasks', JSON.stringify(tasks));
-}
-
 
 /**
  * Gets an item from remote storage.
@@ -227,7 +220,3 @@ async function saveData(key, value) {
     return false;
   }
 }
-
-
-// Initialize user and contact
-// userAndContacts();
