@@ -2,13 +2,13 @@
  * Constant storing the storage token for remote storage.
  * @type {string}
  */
-const STORAGE_TOKEN = '6E3ZJQ08T28HLNYDZ6RRN8U79V2FL0N375M0W6KJ';
+// const STORAGE_TOKEN = '6E3ZJQ08T28HLNYDZ6RRN8U79V2FL0N375M0W6KJ';
 
 /**
  * The URL for remote storage.
  * @type {string}
  */
-const STORAGE_URL = 'https://remote-storage.developerakademie.org/item';
+// const STORAGE_URL = 'https://remote-storage.developerakademie.org/item';
 
 /**
  *indicating the data has been loaded.
@@ -89,7 +89,7 @@ async function setItem(key, value) {
  * Save task data to storage
  */
 async function saveTasksToStorage() {
-  await setItem('tasks', JSON.stringify(tasks));
+  // await setItem('tasks', JSON.stringify(tasks));
 }
 
 

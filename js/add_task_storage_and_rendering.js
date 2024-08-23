@@ -21,14 +21,11 @@ let addedSubTasks = [];
  * @returns {Promise<void>} A Promise that resolves when initialization is complete.
  */
 async function initAddTask() {
-    // userAndContacts();
+    await includeHTML();
     await loadContactsFromStorage();
-    // await loadUsersFromStorage();
-    // await loadCurrentUserFromStorage();
-    await loadTasksFromStorage();
     sortContactsUserFirst(contacts);
-    renderContacts();
-    selectPrio(2);
+    await renderContacts();
+    await selectPrio(2);
 }
 
 

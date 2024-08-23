@@ -288,9 +288,8 @@ async function addNewTask(title, description, priority, date, category, assigned
  */
 async function pushNewTask(newTask) {
     let response = await post('tasks', JSON.stringify(newTask));
-    console.log(response);
     clearTaskInput();
-    // window.location.href = 'board.html';
+    window.location.href = 'board.html';
 }
 
 

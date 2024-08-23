@@ -186,10 +186,10 @@ function generateContactListItemHTML(contact,i) {
     return /*html*/`
     <button type="button" id="contact-${contact['id']}" class="assigned-to-contacts-list-item ${addCSSClass_assigned(contact['id'])}" onclick="toggleAssignment(${contact['id']},'contact-${i}-checkbox')">
       <div class="assigned-to-contact">
-        <div class="profile-badge bc-${contact['badge-color']} width-40px border-2px">${contact['initials']}</div>
+        <div class="profile-badge bc-${contact['badge_color']} width-40px border-2px">${contact['initials']}</div>
         <div class="contact-text">
             <div class="contact-name">${maskSpecialChars(contact['name'])}</div>
-            <div class="contact-user-state">${checkContactUserState(contact['userid'])}</div>
+            <div class="contact-user-state">${checkContactUserState(contact['active_user'])}</div>
         </div>
       </div>
       <img id="contact-${i}-checkbox" src="${loadCheckButtonImg(contact['id'])}" alt="">
@@ -209,7 +209,7 @@ function generateSubtaskInEditPopupHTML(subtask,i) {
     return /*html*/`
     <div id="popup-task-edit-subtask-${i}" class="subtask-list-item">
         <ul style="margin-left: 16px;">
-            <li>${maskSpecialChars(subtask['subtask'])}</li>
+            <li>${maskSpecialChars(subtask['description'])}</li>
         </ul>
         <div class="subtask-buttons-container">
             <button class="btn-edit icon-button" onclick="editSubtask(${i})">

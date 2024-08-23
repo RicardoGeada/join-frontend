@@ -46,16 +46,3 @@ async function getCurrentUser() {
   if (loggedInUserID) currentUser = await get(`users/${loggedInUserID}`);
 }
 
-// async function getUserInfo() {
-//     response = await get('users/1')
-//     console.log(response)
-// }
-
-// getUserInfo()
-
-// register
-// login
-// users
-// contacts
-// tasks
-// subtasks
