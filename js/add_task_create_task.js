@@ -266,7 +266,6 @@ async function addNewTask(title, description, priority, date, category, assigned
     let newTask = {
         'status': taskStatus,
         'category': category,
-        // 'category_color': categoryColor,
         'title': title,
         'description': description,
         'due_date': date,

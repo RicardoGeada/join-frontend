@@ -37,18 +37,14 @@ async function saveNewContact() {
     if(loggedInUserID == -2) {
         msgBox();
     } else {
-        lastContactId++;
-        await saveData("lastContactId", lastContactId);
         let newDataSet = readNewInputs();
-        let answer;
         clearAddPopup();
-        contacts.push(newDataSet[0]);
-        answer = await saveData("contacts", contacts);
+        let response = await postAPI("contacts", JSON.stringify(newDataSet));
         reloadContacts();
         if (editPopupOpen) {
             loadContactsWithAddedContact(currentTask['id']);
         }
-        isSavedNewContact(answer);
+        isSavedNewContact(response.email == newDataSet.email);
     }
 }
 
@@ -78,15 +74,11 @@ async function isSavedNewContact(answer) {
  * @returns Array with Json object.
  */
 function readNewInputs() {
-    return [{
-        'id': lastContactId,
-        'name': document.getElementById('addconname').value,
-        'initials' : initialsFrom(document.getElementById('addconname').value),
-        'email': document.getElementById('addconemail').value,
-        'phone': document.getElementById('addconphone').value,
-        'badge-color': randomBadgeColor(),
-        "userid": -1
-    }];
+  return {
+    name: document.getElementById("addconname").value,
+    email: document.getElementById("addconemail").value,
+    phone: document.getElementById("addconphone").value,
+  };
 }
 
 

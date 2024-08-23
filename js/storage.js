@@ -122,7 +122,6 @@ async function loadCurrentUserFromStorage() {
  */
 async function loadUsersFromStorage() {
   users = await getAPI('users');
-  console.log('Users' , users)
 }
 
 
@@ -131,7 +130,6 @@ async function loadUsersFromStorage() {
  */
 async function loadContactsFromStorage() {
   contacts = await getAPI('contacts');
-  console.log('Contacts' , contacts)
 }
 
 
@@ -140,7 +138,6 @@ async function loadContactsFromStorage() {
  */
 async function loadTasksFromStorage() {
   tasks = await getAPI('tasks');
-  console.log('Tasks' , tasks)
 }
 
 
