@@ -16,8 +16,8 @@ let contactSearch = '';
  */
 async function initBoard() {
   renderMobileOrDesktopBoardHeader(window.innerWidth >= 1000);
+  await loadContactsFromStorage();
   await loadTasksFromStorage();
-  await loadLastContactId();
   renderAllTasks();
   initAddTask();
 }
@@ -115,7 +115,7 @@ function generateBoardSubtasksHTML(taskJSON) {
     let boardSubtasksHTML = '';
     let subtasks = taskJSON['subtasks'];
     if (subtasks.length > 0) {
-        let subtasksDone = subtasks.filter(subtask => subtask['done'] == true).length;
+        let subtasksDone = subtasks.filter(subtask => subtask['is_done'] == true).length;
         let procentualAmountDone = (subtasksDone / subtasks.length) * 100;
         boardSubtasksHTML = boardSubtasksContainerHTML(subtasksDone,procentualAmountDone,subtasks);
     }
@@ -235,9 +235,10 @@ async function toggleSubtaskState(taskID, subtaskIndex) {
     img.src = (img.src.includes('button_unchecked')) ? checkButtonsSRC[1] : checkButtonsSRC[0];
     msgBox("Your changes won't be saved.<br> Please register and log in.");
   } else {
-    subtask['done'] = subtask['done']? false:true;
-    img.src = checkButtonsSRC[+subtask['done']];
-    await saveTasksToStorage();
+    subtask['is_done'] = subtask['is_done']? false:true;
+    img.src = checkButtonsSRC[+subtask['is_done']];
+    // await saveTasksToStorage();
+    await update(`tasks/${taskID}`, JSON.stringify(task))
   }
 }
 
@@ -252,7 +253,8 @@ async function deleteTask(taskID) {
   } else {
     let taskIndex = tasks.findIndex(task => task['id'] == taskID);
     tasks.splice(taskIndex,1);
-    await saveTasksToStorage();
+    // await saveTasksToStorage();
+    await deleteAPI(`tasks/${taskID}`)
     closePopup();
     renderAllTasks();
   }
@@ -352,6 +354,11 @@ function stopPropagation(event) {
 }
 
 
+function getCategoryColorOnBoard(category) {
+  return category == 'Technical Task' ? 5 : 10;
+}
+
+
 // INPUT FOCUS
 /**
  * sets the focus on the input, when clicking on the container
@@ -361,5 +368,4 @@ function setFocusOnInput(id) {
   let input = document.getElementById(id);
   if (document.activeElement !== input) input.focus();
 }
-
 

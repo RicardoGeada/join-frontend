@@ -1,16 +1,4 @@
 /**
- * Constant storing the storage token for remote storage.
- * @type {string}
- */
-const STORAGE_TOKEN = '6E3ZJQ08T28HLNYDZ6RRN8U79V2FL0N375M0W6KJ';
-
-/**
- * The URL for remote storage.
- * @type {string}
- */
-const STORAGE_URL = 'https://remote-storage.developerakademie.org/item';
-
-/**
  *indicating the data has been loaded.
  * @type {boolean}
  */
@@ -85,13 +73,6 @@ async function setItem(key, value) {
 }
 
 
-/**
- * Save task data to storage
- */
-async function saveTasksToStorage() {
-  await setItem('tasks', JSON.stringify(tasks));
-}
-
 
 /**
  * Gets an item from remote storage.
@@ -116,10 +97,9 @@ async function getItem(key) {
  * @returns {void}
  */
 async function userAndContacts() {
-  loadContactsFromStorage();
-  loadUsersFromStorage();
-  loadCurrentUserFromStorage();
-  loadLastContactId();
+  await loadContactsFromStorage();
+  await loadUsersFromStorage();
+  await loadCurrentUserFromStorage();
   isLoaded = true;
 }
 
@@ -141,7 +121,7 @@ async function loadCurrentUserFromStorage() {
  * Loads user data from storage.
  */
 async function loadUsersFromStorage() {
-  users = await loadFromStorage('users', users);
+  users = await getAPI('users');
 }
 
 
@@ -149,7 +129,7 @@ async function loadUsersFromStorage() {
  * Loads contact data from storage.
  */
 async function loadContactsFromStorage() {
-  contacts = await loadFromStorage('contacts', contacts);
+  contacts = await getAPI('contacts');
 }
 
 
@@ -157,7 +137,7 @@ async function loadContactsFromStorage() {
  * Loads task data from storage.
  */
 async function loadTasksFromStorage() {
-  tasks = await loadFromStorage('tasks', tasks);
+  tasks = await getAPI('tasks');
 }
 
 
@@ -197,23 +177,13 @@ function sortContactsUserFirst(arr) {
   sortedContacts.sort((c1, c2) => c1.initials < c2.initials ? -1 : c1.initials > c2.initials ? 1 : 0);
   // place user at the first position
   if (currentUser['id'] >= 0) {
-    const currentUserIndex = sortedContacts.findIndex(contact => contact['userid'] == currentUser['id']);
+    const currentUserIndex = sortedContacts.findIndex(contact => contact['active_user'] == currentUser['id']);
     const currentUserContactInfo = JSON.parse(JSON.stringify(sortedContacts[currentUserIndex]));
     sortedContacts.splice(currentUserIndex,1);
     sortedContacts.unshift(currentUserContactInfo);
   }
 }
 
-
-/**
- * Loads the ID of the last contact from storage.
- * @returns {void}
- */
-async function loadLastContactId() {
-  let tempData;
-  tempData = await loadData("lastContactId", 0);
-  lastContactId = +JSON.parse(tempData);
-}
 
 
 /**
@@ -247,7 +217,3 @@ async function saveData(key, value) {
     return false;
   }
 }
-
-
-// Initialize user and contact
-userAndContacts();

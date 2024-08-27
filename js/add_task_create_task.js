@@ -168,7 +168,7 @@ function addedContact(index) {
     let checked = document.getElementById(`check${index}`);
     let src = checked.getAttribute("src");
     let id = sortedContacts[index]['id'];   //set index from Contacts to ID
-    let badge = sortedContacts[index]['badge-color'];
+    let badge = sortedContacts[index]['badge_color'];
 
     addedContactsCheckBox(selectedContact, checked, src, id, badge, index);
 
@@ -191,15 +191,15 @@ function createSubTask() {
     } else {
         addedSubTasks.push(
             {
-                done: false,
-                subtask: newSubTask.value
+                is_done: false,
+                description: newSubTask.value
             }
         );
         newSubTask.value = '';
         showSubs.innerHTML = '';
 
         for (let j = 0; j < addedSubTasks.length; j++) {
-            const sub = addedSubTasks[j]['subtask'];
+            const sub = addedSubTasks[j]['description'];
             showSubs.innerHTML += renderSubHTML(sub, j);
         };
         closeSubTaskInput();
@@ -264,10 +264,8 @@ function setNewTaskData() {
  */
 async function addNewTask(title, description, priority, date, category, assignedTo, subtasks) {
     let newTask = {
-        'id': getTaskId(),
         'status': taskStatus,
         'category': category,
-        'category_color': categoryColor,
         'title': title,
         'description': description,
         'due_date': date,
@@ -279,21 +277,6 @@ async function addNewTask(title, description, priority, date, category, assigned
 }
 
 
-/**
- * Generates a new task ID based on the highest existing ID in the loaded tasks.
- * @function
- * @returns {number} The new task ID.
- */
-function getTaskId() {
-    let highestID = 0;
-    for (let i = 0; i < tasks.length; i++) {
-        if (highestID < tasks[i]['id']) {
-            highestID = tasks[i]['id'];
-        }
-    }
-    return highestID + 1;
-}
-
 
 /**
  * Pushes a new task to the list of loaded tasks, stores it in storage, clears the task input, and redirects to the board.
@@ -303,8 +286,7 @@ function getTaskId() {
  * @throws {Error} Throws an error if pushing the new task or storing it in storage fails.
  */
 async function pushNewTask(newTask) {
-    tasks.push(newTask);
-    await setItem('tasks', JSON.stringify(tasks));
+    let response = await postAPI('tasks', JSON.stringify(newTask));
     clearTaskInput();
     window.location.href = 'board.html';
 }

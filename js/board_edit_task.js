@@ -217,7 +217,7 @@ function addCSSClass_assigned(contactID) {
  */
 function checkContactUserState(userid) {
   if (userid == currentUser['id']) return '(You)'
-  else if (userid < 0) return '';
+  else if (!userid) return '';
   else return '(User)';
 }
 
@@ -256,7 +256,7 @@ function renderAssignedUserBadgesEditTask() {
     let contact = contacts.find(u => u['id'] == assignedContacts[i]);
     if (contact != undefined) {
       container.innerHTML += /*html*/`
-      <div class="profile-badge bc-${contact['badge-color']} width-40px">${contact['initials']}</div>
+      <div class="profile-badge bc-${contact['badge_color']} width-40px">${contact['initials']}</div>
     `;
     }
   };
@@ -348,8 +348,8 @@ function addNewSubtask() {
   let inputContainer = document.getElementById('subtasks-input-container');
   if (input.value != '') {
     let newSubtask = {
-      done: false,
-      subtask: `${input.value}`,
+      is_done: false,
+      description: `${input.value}`,
     };
     currentTask['subtasks'].push(newSubtask);
   } else {
@@ -422,5 +422,5 @@ async function saveEditedTask(task,currentTask) {
   task['priority'] = currentTask['priority'];
   task['assigned_to'] = currentTask['assigned_to'];
   task['subtasks'] = currentTask['subtasks'];
-  await setItem('tasks', JSON.stringify(tasks));
+  await updateAPI(`tasks/${task.id}`, JSON.stringify(task));
 }

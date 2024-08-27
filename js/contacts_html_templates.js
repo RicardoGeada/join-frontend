@@ -25,7 +25,7 @@ function renderListEntry(i, isUser = "") {
           <div id="contact-listbox-${sortedContacts[i].id}" class="contact-listbox" onclick="openContact(${sortedContacts[i].id})">
               <div class="contact-listbox-badgebox">
                   <div class="contact-listbox-badge">
-                      <div class="contact-listbox-badge-circle bg-contact-${sortedContacts[i]["badge-color"]}">
+                      <div class="contact-listbox-badge-circle bg-contact-${sortedContacts[i]["badge_color"]}">
                           <span class="contact-listbox-badge-text">${sortedContacts[i].initials}</span>
                       </div>
                   </div>

@@ -1,16 +1,16 @@
 document.addEventListener('click', hideUserOptions);
 
 let loggedInUserID = +localStorage.getItem("loggedInUserID");
-let loggedInUser = localStorage.getItem("loggedInUser");
+let token = localStorage.getItem('token');
 let isNotAUser = true;
 
 
 /**
  * Checks for user data in local storage and redirects to the home page if missing.
  */
-if(!loggedInUserID || !loggedInUser) {
-    localStorage.removeItem("loggedInUser");
+if(!loggedInUserID || !token) {
     localStorage.removeItem("loggedInUserID");
+    localStorage.removeItem("token");
     let comeFrom = document.location.pathname;
     if (!comeFrom.includes("legal_notice.html") && !comeFrom.includes("privacy_policy.html")) {
         window.location.href = 'index.html';
@@ -25,8 +25,8 @@ if(!loggedInUserID || !loggedInUser) {
  * Checks for guest or logged in user. Displays the user badge or logs the user out.
  */
 async function initLoggedInUser() {
-    await loadHeaderUsersFromStorage();
-    if(loggedInUserID != -2 && useridToIndex(loggedInUserID, users) == -1) {
+    currentUser = await getAPI(`users/${loggedInUserID}`);
+    if(!currentUser) {
         userLogout();
     } else {
         renderHeaderUserName();
@@ -76,28 +76,19 @@ function useridToIndex(id, arr = users) {
         return item.id === id;
     });
   }
-  
 
-  /**
-   * Loads all users into the user list.
-   */
-async function loadHeaderUsersFromStorage() {
-    let tempData;
-    tempData = await loadData('users', users);
-    users = tempData;
-}
 
 
 /**
  * Renders the user's initials into the badge.
  */
 async function renderHeaderUserName() {
-    let index = useridToIndex(loggedInUserID, users);
+    await includeHTML();
     let obj = document.getElementById('user-name');
     if(obj === null) {
         window.location.reload();
     } else {
-        loggedInUserID == -2 ? obj.innerHTML = 'G' : obj.innerHTML = users[index].initials;
+        loggedInUserID == -2 ? obj.innerHTML = 'G' : obj.innerHTML = currentUser.initials;
     }
 }
 
@@ -107,7 +98,6 @@ async function renderHeaderUserName() {
  */
 function userLogout() {
     localStorage.removeItem('loggedInUserID');
-    localStorage.removeItem('loggedInUser');
     window.location.href = "index.html";
 }
 

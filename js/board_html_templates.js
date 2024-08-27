@@ -76,7 +76,7 @@ function boardHeaderMobileHTML() {
 function generateBoardTaskHTML(taskJSON) {
     return /*html*/ `
       <div id="task-${taskJSON['id']}-container" class="task-container" onclick="openPopup(${taskJSON['id']})" draggable="true" ondragstart="startDragging(${taskJSON['id']},event)" ondrag="drag(event)"  ondragend="dragEnd(event)"  ontouchstart="touchStart(${taskJSON['id']},event)" ontouchmove="touchDrag(event)" ontouchend="touchEnd(event)">
-          <div class="task-category bc-${taskJSON['category_color']}">${taskJSON['category']}</div>
+          <div class="task-category bc-${getCategoryColorOnBoard(taskJSON['category'])}">${taskJSON['category']}</div>
           <div class="task-text">
               <div class="task-title">${maskSpecialChars(taskJSON['title'])}</div>
               <div class="task-description">${maskSpecialChars(shortenString(taskJSON['description'],50))}</div>
@@ -104,7 +104,7 @@ function generateBoardTaskHTML(taskJSON) {
  */
 function profileBadgeForBoardHTML(contact,i) {
     return /*html*/`
-    <div class="profile-badge bc-${contact['badge-color']}" style="left: -${(i * 8)}px">${contact['initials']}</div>`;
+    <div class="profile-badge bc-${contact['badge_color']}" style="left: -${(i * 8)}px">${contact['initials']}</div>`;
   }
   
 
@@ -285,7 +285,7 @@ function generatePopupContactsHTML(task) {
 function contactListItemHTML(contact) {
     return /*html*/`
     <li class="contacts-list-item">
-      <div class="profile-badge bc-${contact['badge-color']} width-40 border-2px">${maskSpecialChars(contact['initials'])}</div>
+      <div class="profile-badge bc-${contact['badge_color']} width-40 border-2px">${maskSpecialChars(contact['initials'])}</div>
       <div class="contact-name">${maskSpecialChars(contact['name'])}</div>
       <div class="contact-user-state">${checkContactUserState(contact['userid'])}</div>
     </li>  
@@ -326,11 +326,11 @@ function generatePopupSubtasksHTML(task) {
   let html = '';
   let checkButtonsSRC = ['./assets/img/check_button_unchecked.svg','./assets/img/check_button_checked.svg']
   for (let i = 0; i < task['subtasks'].length; i++) {
-    let done = task['subtasks'][i]['done'];
+    let done = task['subtasks'][i]['is_done'];
     html += /*html*/`
       <li class="subtasks-list-item" onclick="toggleSubtaskState(${task['id']},${i})">
           <img id="subtask-${i}-checkbutton" src="${checkButtonsSRC[+done]}" alt="checked-icon">
-          <div>${maskSpecialChars(task['subtasks'][i]['subtask'])}</div>
+          <div>${maskSpecialChars(task['subtasks'][i]['description'])}</div>
       </li>          
     `;
   }
